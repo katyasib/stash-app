@@ -1417,7 +1417,7 @@
           <div class="settings-sub">Restore the original sample stash, discarding any changes you've made.</div>
         </div>
         <button class="icon-btn-sm" onclick="resetAll()" aria-label="Reset" style="color: #b34a3a;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
         </button>
       </div>
       <div style="margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 12px; color: var(--ink-med); line-height: 1.6;">
@@ -1449,7 +1449,7 @@
           <span id="archive-label">Archive</span>
         </button>
         <button class="menu-item danger" onclick="deleteFromDetail()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
           Delete
         </button>
       </div>
@@ -1474,6 +1474,9 @@
 
 <script>
 const STORAGE_KEY = 'yarnstash_demo_v1';
+const ICON_FIBER = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>';
+const ICON_WEIGHT = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.4 2.4 0 0 1 0-3.4l2.6-2.6a2.4 2.4 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/></svg>';
+const ICON_HOOK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v11a4 4 0 0 0 8 0"/><path d="M15 3v4"/></svg>';
 const SORT_OPTIONS = [
   { key: 'recent', label: 'Recently added' },
   { key: 'name-asc', label: 'Name (A → Z)' },
@@ -1655,10 +1658,10 @@ function listCard(y) {
           <p class="brand">${escapeHtml(y.brand || '')}</p>
         </div>
         <div class="info">
-          ${fiber ? `<p>${escapeHtml(fiber)}</p>` : ''}
+          ${fiber ? `<p style="display:flex;align-items:center;gap:4px;">${ICON_FIBER}${escapeHtml(fiber)}</p>` : ''}
           <div class="info-row">
-            ${length ? `<span>${escapeHtml(length)}</span>` : ''}
-            ${y.hook ? `<span>${escapeHtml(formatHook(y.hook))} hook</span>` : ''}
+            ${length ? `<span style="display:inline-flex;align-items:center;gap:4px;">${ICON_WEIGHT}${escapeHtml(length)}</span>` : ''}
+            ${y.hook ? `<span style="display:inline-flex;align-items:center;gap:4px;">${ICON_HOOK}${escapeHtml(formatHook(y.hook))} hook</span>` : ''}
           </div>
         </div>
       </div>
@@ -1679,10 +1682,10 @@ function gridCard(y) {
           <p class="brand">${escapeHtml(y.brand || '')}</p>
         </div>
         <div class="info">
-          ${fiber ? `<p>${escapeHtml(fiber)}</p>` : ''}
+          ${fiber ? `<p style="display:flex;align-items:center;gap:4px;">${ICON_FIBER}${escapeHtml(fiber)}</p>` : ''}
           <div class="info-row">
-            ${length ? `<span>${escapeHtml(length)}</span>` : ''}
-            ${y.hook ? `<span>${escapeHtml(formatHook(y.hook))}</span>` : ''}
+            ${length ? `<span style="display:inline-flex;align-items:center;gap:4px;">${ICON_WEIGHT}${escapeHtml(length)}</span>` : ''}
+            ${y.hook ? `<span style="display:inline-flex;align-items:center;gap:4px;">${ICON_HOOK}${escapeHtml(formatHook(y.hook))}</span>` : ''}
           </div>
         </div>
       </div>
@@ -2024,11 +2027,12 @@ function renderPhotoArea() {
     area.innerHTML = `
       <div class="photo-upload" onclick="document.getElementById('photo-input').click()">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="2" y="4" width="16" height="16" rx="2"/>
-          <circle cx="7.5" cy="9.5" r="1.5"/>
-          <path d="m2 16 4-4a2 2 0 0 1 2.83 0L18 20"/>
-          <line x1="19" y1="3" x2="19" y2="9"/>
-          <line x1="16" y1="6" x2="22" y2="6"/>
+          <rect x="3" y="4" width="15" height="15" rx="2"/>
+          <circle cx="8" cy="9.5" r="1.5"/>
+          <path d="m3 15.5 3.5-3.5a2 2 0 0 1 2.83 0L18 19"/>
+          <circle cx="18.5" cy="18.5" r="4.5" fill="var(--white)" stroke="currentColor"/>
+          <line x1="18.5" y1="16.5" x2="18.5" y2="20.5"/>
+          <line x1="16.5" y1="18.5" x2="20.5" y2="18.5"/>
         </svg>
         <span style="font-size: 16px; font-weight: 500; color: var(--ink); margin-top: 4px;">Add image</span>
       </div>`;
